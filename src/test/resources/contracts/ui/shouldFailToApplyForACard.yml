@@ -1,0 +1,11 @@
+#86010156812
+description: A non eligible client fails to apply for a card
+request:
+  url: /applications
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    pesel: 86010156812
+response:
+  status: 403

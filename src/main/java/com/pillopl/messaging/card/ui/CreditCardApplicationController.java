@@ -1,6 +1,9 @@
 package com.pillopl.messaging.card.ui;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pillopl.messaging.card.application.ApplyForCardService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +35,8 @@ class CardApplication {
 
     private final String pesel;
 
-    CardApplication(String pesel) {
+    @JsonCreator
+    CardApplication(@JsonProperty("pesel") String pesel) {
         this.pesel = pesel;
     }
 
