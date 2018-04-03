@@ -6,15 +6,35 @@ import java.util.UUID;
 
 public class CardGranted implements DomainEvent {
 
-    private final UUID cardNo;
-    private final BigDecimal cardLimit;
-    private final String clientPesel;
-    private final Instant timestamp = Instant.now();
-    private final String type = "card-granted";
+    final UUID cardNo;
+    final BigDecimal cardLimit;
+    final String clientPesel;
+    final Instant timestamp = Instant.now();
+    final String type = "card-granted";
 
     public CardGranted(UUID cardNo, BigDecimal cardLimit, String clientPesel) {
         this.cardNo = cardNo;
         this.cardLimit = cardLimit;
         this.clientPesel = clientPesel;
+    }
+
+    public UUID getCardNo() {
+        return cardNo;
+    }
+
+    public BigDecimal getCardLimit() {
+        return cardLimit;
+    }
+
+    public String getClientPesel() {
+        return clientPesel;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public String getType() {
+        return type;
     }
 }
