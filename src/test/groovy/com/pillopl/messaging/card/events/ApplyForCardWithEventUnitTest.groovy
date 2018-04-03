@@ -22,7 +22,7 @@ class ApplyForCardWithEventUnitTest extends Specification {
 
     def 'should emit CardApplicationRejected when client born before 70s'() {
         when:
-            applyForCardService.apply("89121514667")
+            applyForCardService.apply("66121514667")
         then:
             1 * domainEventsPublisher.publish( { it instanceof CardApplicationRejected } )
     }
