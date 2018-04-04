@@ -10,7 +10,6 @@ public class CardGranted implements DomainEvent {
     final BigDecimal cardLimit;
     final String clientPesel;
     final Instant timestamp = Instant.now();
-    final String type = "card-granted";
 
     public CardGranted(UUID cardNo, BigDecimal cardLimit, String clientPesel) {
         this.cardNo = cardNo;
@@ -34,7 +33,7 @@ public class CardGranted implements DomainEvent {
         return timestamp;
     }
 
-    public String getType() {
-        return type;
+    @Override public String getType() {
+        return "card-granted";
     }
 }

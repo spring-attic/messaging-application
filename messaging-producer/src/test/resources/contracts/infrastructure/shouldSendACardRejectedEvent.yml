@@ -4,11 +4,11 @@ input:
 outputMessage:
   sentTo: channel
   headers:
+    type: card-application-rejected
     contentType: application/json
   body:
     clientPesel: 86010156812
     timestamp: 2018-01-01T12:12:12.000Z
-    type: card-application-rejected
   matchers:
     body:
       - path: $.timestamp

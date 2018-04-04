@@ -11,10 +11,10 @@ Contract.make {
 			cardNo: anyUuid(),
 			cardLimit: anyNumber(),
 			clientPesel: "86010197600",
-			timestamp: anyIso8601WithOffset(),
-			type: "card-granted"
+			timestamp: anyIso8601WithOffset()
 		)
 		headers {
+			header("type", "card-granted")
 			messagingContentType(applicationJson())
 		}
 	}

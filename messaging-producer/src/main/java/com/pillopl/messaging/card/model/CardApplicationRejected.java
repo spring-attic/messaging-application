@@ -6,7 +6,6 @@ public class CardApplicationRejected implements DomainEvent {
 
     final String clientPesel;
     final Instant timestamp = Instant.now();
-    final String type = "card-application-rejected";
 
     public CardApplicationRejected(String clientPesel) {
         this.clientPesel = clientPesel;
@@ -20,7 +19,7 @@ public class CardApplicationRejected implements DomainEvent {
         return timestamp;
     }
 
-    public String getType() {
-        return type;
+    @Override public String getType() {
+        return "card-application-rejected";
     }
 }

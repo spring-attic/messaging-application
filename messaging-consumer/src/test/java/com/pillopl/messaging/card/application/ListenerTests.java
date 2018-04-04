@@ -32,7 +32,9 @@ public class ListenerTests {
 	@Test
 	public void should_log_card_granted() {
 		sink.input().send(MessageBuilder.withPayload(
-				new CardGranted(UUID.randomUUID(), BigDecimal.ONE, "123")).build());
+				new CardGranted(UUID.randomUUID(), BigDecimal.ONE, "123"))
+				.setHeader("type", "card-granted")
+				.build());
 
 		BDDAssertions.then(this.capture.toString()).contains("GRANTED");
 	}
@@ -40,7 +42,9 @@ public class ListenerTests {
 	@Test
 	public void should_log_card_rejected() {
 		sink.input().send(MessageBuilder.withPayload(
-				new CardApplicationRejected("123")).build());
+				new CardApplicationRejected("123"))
+				.setHeader("type", "card-application-rejected")
+				.build());
 
 		BDDAssertions.then(this.capture.toString()).contains("REJECTED");
 	}

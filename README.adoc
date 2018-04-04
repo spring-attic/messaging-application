@@ -1,0 +1,12 @@
+= Messaging Application Tests
+
+Sample application used for the presentation showing different test
+types for an event driven application.
+
+In the sources you'll be able to find
+
+- unit tests
+- integration tests
+- contract tests (producer and consumer of a message)
+
+TODO: add more content

@@ -4,20 +4,18 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
-public class CardGranted implements DomainEvent {
+public class CardGranted {
 
     UUID cardNo;
     BigDecimal cardLimit;
     String clientPesel;
     Instant timestamp;
-    String type;
 
     public CardGranted(UUID cardNo, BigDecimal cardLimit, String clientPesel) {
         this.cardNo = cardNo;
         this.cardLimit = cardLimit;
         this.clientPesel = clientPesel;
         this.timestamp = Instant.now();
-        this.type = "card-granted";
     }
 
     public CardGranted() {
@@ -39,7 +37,4 @@ public class CardGranted implements DomainEvent {
         return timestamp;
     }
 
-    @Override public String getType() {
-        return type;
-    }
 }
