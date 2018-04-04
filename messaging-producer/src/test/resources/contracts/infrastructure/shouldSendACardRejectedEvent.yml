@@ -1,0 +1,16 @@
+label: card_rejected
+input:
+  triggeredBy: sendRejected()
+outputMessage:
+  sentTo: channel
+  headers:
+    contentType: application/json
+  body:
+    clientPesel: 86010156812
+    timestamp: 2018-01-01T12:12:12.000Z
+    type: card-application-rejected
+  matchers:
+    body:
+      - path: $.timestamp
+        type: by_regex
+        predefined: iso_8601_with_offset
