@@ -13,6 +13,9 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.http.ResponseEntity.status;
 
+/**
+ * @author Jakub Pilimon
+ */
 @RestController("/applications")
 class CreditCardApplicationController {
 
@@ -31,6 +34,9 @@ class CreditCardApplicationController {
     }
 }
 
+/**
+ * @author Jakub Pilimon
+ */
 class CardApplication {
 
     private final String pesel;

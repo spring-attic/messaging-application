@@ -1,9 +1,13 @@
 package com.pillopl.messaging.card.model;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+/**
+ * @author Jakub Pilimon
+ */
 @Entity
 public class CreditCard {
 

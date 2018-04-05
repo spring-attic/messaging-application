@@ -6,6 +6,9 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * @author Jakub Pilimon
+ */
 @SpringBootApplication
 @EnableBinding(Source.class)
 @EnableScheduling

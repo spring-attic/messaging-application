@@ -13,6 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 
+/**
+ * @author Jakub Pilimon
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ApplyForCardWithEventMockBeanTest {

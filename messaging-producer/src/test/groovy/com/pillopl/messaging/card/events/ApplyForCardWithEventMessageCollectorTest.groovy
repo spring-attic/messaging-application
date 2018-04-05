@@ -11,6 +11,9 @@ import spock.lang.Specification
 
 import java.util.concurrent.BlockingQueue
 
+/**
+ * @author Jakub Pilimon
+ */
 @SpringBootTest
 class ApplyForCardWithEventMessageCollectorTest extends Specification {
 

@@ -2,6 +2,9 @@ package com.pillopl.messaging.card.model;
 
 import java.time.Instant;
 
+/**
+ * @author Jakub Pilimon
+ */
 public class CardApplicationRejected implements DomainEvent {
 
     final String clientPesel;

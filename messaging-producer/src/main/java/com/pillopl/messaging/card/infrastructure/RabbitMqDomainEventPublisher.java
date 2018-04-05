@@ -10,6 +10,9 @@ import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Jakub Pilimon
+ */
 @Component
 public class RabbitMqDomainEventPublisher implements DomainEventsPublisher {
 

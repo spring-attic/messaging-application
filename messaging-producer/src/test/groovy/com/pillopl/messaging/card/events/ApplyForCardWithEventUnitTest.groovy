@@ -7,6 +7,9 @@ import com.pillopl.messaging.card.model.CardGranted
 import com.pillopl.messaging.card.model.CreditCardRepository
 import spock.lang.Specification
 
+/**
+ * @author Jakub Pilimon
+ */
 class ApplyForCardWithEventUnitTest extends Specification {
 
     DomainEventsPublisher domainEventsPublisher = Mock()

@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * @author Jakub Pilimon
+ */
 public class CardGranted implements DomainEvent {
 
     final UUID cardNo;

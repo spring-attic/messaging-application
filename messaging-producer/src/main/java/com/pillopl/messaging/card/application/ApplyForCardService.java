@@ -13,6 +13,9 @@ import java.util.Optional;
 import static java.lang.Integer.valueOf;
 import static java.util.Optional.of;
 
+/**
+ * @author Jakub Pilimon
+ */
 @Service
 public class ApplyForCardService {
 

@@ -13,6 +13,9 @@ import spock.util.concurrent.PollingConditions
 
 import java.util.concurrent.BlockingQueue
 
+/**
+ * @author Jakub Pilimon
+ */
 @SpringBootTest
 @Ignore
 class ApplyForCardWithInternalQueueOfEventsTest extends Specification {

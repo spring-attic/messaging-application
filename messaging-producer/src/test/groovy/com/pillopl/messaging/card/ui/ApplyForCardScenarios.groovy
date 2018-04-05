@@ -5,6 +5,9 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.ResponseEntity
 import spock.lang.Specification
 
+/**
+ * @author Jakub Pilimon
+ */
 @SpringBootTest
 class ApplyForCardScenarios extends Specification {
 

@@ -13,6 +13,9 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Jakub Pilimon
+ */
 @SpringBootApplication
 @EnableBinding(Sink.class)
 public class ConsumerMessagingApplication {
@@ -23,6 +26,9 @@ public class ConsumerMessagingApplication {
 
 }
 
+/**
+ * @author Jakub Pilimon
+ */
 @Component
 class Listener {
 	private static final Logger log = LoggerFactory.getLogger(Listener.class);

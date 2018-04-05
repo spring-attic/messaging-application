@@ -4,12 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pillopl.messaging.card.DomainEventsPublisher;
 import com.pillopl.messaging.card.model.DomainEvent;
+
+import javax.transaction.Transactional;
+
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.transaction.Transactional;
-
+/**
+ * @author Jakub Pilimon
+ */
 //@Primary
 //@Component
 public class FromDBDomainEventPublisher implements DomainEventsPublisher {

@@ -1,17 +1,23 @@
 package com.pillopl.messaging.card.infrastructure;
 
-import org.springframework.data.repository.CrudRepository;
-
+import java.time.Instant;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.Instant;
-import java.util.List;
 
+import org.springframework.data.repository.CrudRepository;
+
+/**
+ * @author Jakub Pilimon
+ */
 interface DomainEventStorage extends CrudRepository<StoredDomainEvent, Long> {
     List<StoredDomainEvent> findAllBySentOrderByTimestampDesc(boolean sent);
 }
 
+/**
+ * @author Jakub Pilimon
+ */
 @Entity
 class StoredDomainEvent {
 
