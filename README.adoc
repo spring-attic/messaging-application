@@ -10,3 +10,8 @@ In the sources you'll be able to find
 - contract tests (producer and consumer of a message)
 
 TODO: add more content
+
+== Author
+
+The main author of this code is our DDD Guru https://twitter.com/JakubPilimon[Jakub Pilimon].
+You can check his http://pillopl.github.io/[blog here].
