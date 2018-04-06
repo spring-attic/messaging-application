@@ -1,12 +1,12 @@
-package com.pillopl.messaging.card.infrastructure;
+package com.pillopl.messaging.card.infrastructure.internal;
 
-import java.time.Instant;
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.springframework.data.repository.CrudRepository;
+import java.time.Instant;
+import java.util.List;
 
 /**
  * @author Jakub Pilimon

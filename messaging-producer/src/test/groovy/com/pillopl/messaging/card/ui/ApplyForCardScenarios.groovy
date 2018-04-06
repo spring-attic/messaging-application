@@ -11,7 +11,7 @@ import spock.lang.Specification
 @SpringBootTest
 class ApplyForCardScenarios extends Specification {
 
-    @Autowired CreditCardApplicationController cardApplicationController;
+    @Autowired CreditCardApplicationController cardApplicationController
 
     def 'should be able to get card when born in 70s or later'() {
         when:
