@@ -1,3 +1,7 @@
+image::https://circleci.com/gh/spring-cloud-samples/messaging-application.svg?style=svg["CircleCI", link="https://circleci.com/gh/spring-cloud-samples/messaging-application"]
+image::https://codecov.io/gh/spring-cloud-samples/messaging-application/branch/master/graph/badge.svg["codecov", link="https://codecov.io/gh/spring-cloud-samples/messaging-application"]
+
+
 = Messaging Application Tests
 
 Sample application used for the presentation showing different test
