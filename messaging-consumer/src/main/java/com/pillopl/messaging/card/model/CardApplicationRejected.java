@@ -3,7 +3,7 @@ package com.pillopl.messaging.card.model;
 import java.time.Instant;
 
 /**
- * @author Jakub Pilimon
+ * @author Marcin Grzejszczak
  */
 public class CardApplicationRejected {
 

@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 /**
- * @author Jakub Pilimon
+ * @author Marcin Grzejszczak
  */
 public class CardGranted {
 
