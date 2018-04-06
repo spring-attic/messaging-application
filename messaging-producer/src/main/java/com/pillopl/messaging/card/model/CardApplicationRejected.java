@@ -14,13 +14,6 @@ public class CardApplicationRejected implements DomainEvent {
         this.clientPesel = clientPesel;
     }
 
-    public String getClientPesel() {
-        return clientPesel;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
-    }
 
     @Override public String getType() {
         return "card-application-rejected";

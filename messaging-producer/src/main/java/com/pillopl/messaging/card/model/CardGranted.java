@@ -20,21 +20,6 @@ public class CardGranted implements DomainEvent {
         this.clientPesel = clientPesel;
     }
 
-    public UUID getCardNo() {
-        return cardNo;
-    }
-
-    public BigDecimal getCardLimit() {
-        return cardLimit;
-    }
-
-    public String getClientPesel() {
-        return clientPesel;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
-    }
 
     @Override public String getType() {
         return "card-granted";

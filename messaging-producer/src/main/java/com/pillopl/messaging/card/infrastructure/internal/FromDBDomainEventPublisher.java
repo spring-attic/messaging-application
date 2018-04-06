@@ -2,21 +2,20 @@ package com.pillopl.messaging.card.infrastructure.internal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pillopl.messaging.card.DomainEventPublisher;
 import com.pillopl.messaging.card.model.DomainEvent;
 import org.springframework.cloud.stream.messaging.Source;
-import org.springframework.context.annotation.Primary;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 
 /**
  * @author Jakub Pilimon
  */
-@Primary
-@Component
-public class FromDBDomainEventPublisher  {
+//@Primary
+//@Component
+public class FromDBDomainEventPublisher implements DomainEventPublisher {
 
     private final DomainEventStorage domainEventStorage;
     private final ObjectMapper objectMapper;
@@ -28,7 +27,7 @@ public class FromDBDomainEventPublisher  {
         this.source = source;
     }
 
-    //@Override
+    @Override
     public void publish(DomainEvent domainEvent) {
         try {
             domainEventStorage.save(new StoredDomainEvent(objectMapper.writeValueAsString(domainEvent)));
