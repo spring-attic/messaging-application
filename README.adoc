@@ -15,3 +15,182 @@ In the sources you'll be able to find
 
 TODO: add more content
 
+== Before Presentation Script
+
+* BEFORE
+** Clone and checkout start
+```
+$ git clone https://github.com/spring-cloud-samples/messaging-application
+$ cd messaging-application
+$ git checkout start
+```
+** have rabbitmq running
+```
+$ git clone https://github.com/spring-cloud-samples/messaging-application
+$ cd messaging-application
+$ docker-compose up -d
+```
+
+== Presentation Script
+
+"us" == 1 person (Expert) + Stanley (that can be the second presenter)
+
+* Introduction
+** about us
+** introduction of roles throughout the presentation
+*** the Expert
+**** expert in TDD & DDD
+*** Stanley
+**** is a regular developer that attends conferences
+**** works at an enterprise related to issuing credit cards
+** The domain *(Stanley)*
+*** Giving out credit cards
+*** Simple condition - potential client's age
+*** new feature to be used via messaging
+** Time for the code *(Stanley)*
+*** let's look at the test code `ApplyForCardScenarios` (Spock test)
+*** happy path (200) and not happy path (403)
+*** `CreditCardApplicationController` delegates to `ApplyForCardService`
+*** If you're born before the 70s you don't get the card
+*** `ApplyForCardService.apply(...)` main logic where we add the new feature
+** New feature (Stanley)
+*** we have to use microservices because it's hype driven coding (or serverless)
+*** (1) Upon successful / unsucessful situation - the system should react (send an email etc.)
+*** (2) non functional requirement - the other app can be down, we don't want to break
+*** (3) a lot of users are applying for card - we don't want to affect performance
+*** (4) some other apps might want to use the data coming from this service
+*** First attempt was to add a rest call to reporting tool
+**** It wouldn't prevent taking care of the outage of the other app
+**** Hystrix won't solve the problem cause we want the other app to process that info when it's up
+**** we're blocking upon sending request - the performance might downgrade
+**** more applications would require add new rest calls to other apps (open closed principle violated)
+** New feature - another way *(Expert)*
+*** different approach - message broker is already there
+*** we'll send an object that tells that sth has happened - such an object is called an event
+*** messages will be delivered to consumers via the broker
+*** summary of pros
+**** Temporal coupling - we don't care that the other app is down
+**** Throttling - we can pick how many events we want to process
+**** Broadcast / multicast - if a new consumer connects to the broker, our app doesn't need to know about this
+**** Spatial coupling eliminated - apps don't have to see each other
+**** Logical coupling eliminated - apps don't need to know about each other
+** Architecture diagram *(Stanley)*
+*** describe the diagram
+*** how to implement `Domain Event Publisher`
+*** let's do TDD and write it!
+*** we're working in agile fashion
+*** no scrum master - we have time to code finally
+** `Domain Event Publisher` *(Expert)*
+*** it turns out that we've already defined a contract of the `DomainEventPublisher` (show the code)
+*** `DomainEvent` marker interface implemented (it has indicator about type of the event)
+*** can be useful to subscribe to specific types of events
+*** let's do TDD! instead of rest calls let's do sending events
+*** `ApplyForCardWithEventUnitTest` *(Expert)*
+**** `should emit granted`, `should emit rejected` - let's implement it
+**** **success** `when: service.apply("77..."); then: `1 * eventPublisher.publish({ ut as CardGranted})`
+**** **failure** `when: service.apply("66..."); then: `1 * eventPublisher.publish({ ut as CardApplicationRejected})`
+**** compilation fix: `new ApplyForCardService(repository, publisher)`
+**** add the publisher to `ApplyForCardService`
+**** TDD - rest, green, refactor - no time for the last
+**** let's run the test and fail
+**** use the publisher inside `apply(...)` - `publish(new CardGranted(...))`
+**** let's run tests and go to production (should we?)
+**** no implementation - we would fail... time for integration test *(Stanley)*
+*** `ApplyForCardWithEventMockBeanTest` - integration test *(Expert)*
+**** we want to catch an exception with a missing bean
+**** //when `controller.applyForCard(new CardApplication("77..."))` //then we don't know yet
+**** //when `controller.applyForCard(new CardApplication("55..."))` //then we don't know yet
+**** Stanley went to a conference and heard about Spring Cloud Stream
+**** tell what Spring Cloud Stream is and that we chose rabbimq binder
+**** Let's create `ToRabbitMqEventPublisher` implementation of `DomainEventPublisher`
+**** describe the abstraction of a channel in Spring Cloud Stream and how it works with classpath scanning
+**** describe what `Sink` and `Sources` are and why Stream comes with those OOB
+**** `ToRabbitMqEventPublisher` inject `Source source`
+**** `source.output().send(new GenericMessage<>(event))`
+**** show the `application.properties` and describe what will happen
+**** Stanley wants to provide the information about the type of event in metadata
+**** let's add messaging headers `Map<String, Object> headers = new HashMap<>(); headers.put("type, event.getType); ...new GenericMessage<>(event, headers));
+**** let's go back to the test - I don't want to have my rabbitmq instance running
+**** let's use a `@MockBean` annotation to inject a mock bean *(Stanley)*
+**** `Mockito.verify(domainEventPublisher).publish(isA(CardGranted.class))`
+**** let's run the test - it should be green
+**** we can go to production! can we? push with force?
+**** let's maybe start the app *(Stanley)* ? Oops...
+**** the test passes but we're missing a dependency... `@Component` over `ToRabbitMqEventPublisher` is missing. Wat?
+**** Show the docs of `MockBean` that if a bean is missing then a new one will be added *(Expert)*
+**** let's add a `@Component` and let's see what we can do better
+**** Spring Cloud Stream at a conference was shown to have `MessageCollector`. We can redirect the message from
+rabbit to a blocking queue
+**** let's change the test to fix it!
+**** before we do that let's recap what we've done until now (TDD mockist - we've checked if DEP was called, `@MockBean` tests everything apart from DEP) *(Stanley)*
+**** with `MessageCollector` we'll test the wholet hing
+*** `MessageCollector` *(Expert)*
+**** `ApartForCardWithEventMessageCollectorTest`
+**** we've got the source and the blocking queue, we've redirected the channel to the queue
+**** //when `controller.applyForCard(new CardApplication("77..."))` //then `events.poll().headers.containsValue("card-granted")`
+**** //when `controller.applyForCard(new CardApplication("55..."))` //then `events.poll().headers.containsValue("card-application-rejected")`
+**** let's summarize *(Stanley)*
+**** we can go to production! let's run both apps before we do... it turns out that we have the consumer already there
+*** E2E *(Stanley)*
+**** Show the `messaging-consumer` and the `Listener` component
+**** Describe what `@StreamListener` is, what `target` and `condition` are
+**** let's run the consumer
+**** let's run the producer
+**** let's curl to trigger the message!
+**** should be `200`: `curl localhost:8080/applications -X POST --header 'Content-Type: application/json' -d '{"clientId":"773456"}' --verbose`
+**** should be `403`: `curl localhost:8080/applications -X POST --header 'Content-Type: application/json' -d '{"clientId":"553456"}' --verbose`
+**** let's check the logs and the payload of the running apps
+**** WAT? I had all the tests passing and still I have to click the apps around *(Stanley)*
+**** what went wrong? Headers are ok, body is wrong. Serialization is wrong? JACKSON! *(Expert)*
+**** probably the POJO is messed up! `CardApplicationRejected` is missing getters and setters
+**** let's add a getter for the first field and re-run the application - I want to catch the behaviour during testing
+**** now it works! I want to fail fast. What can we do? *(Stanley)*
+**** I heard about the tool Spring Cloud Contract - it turns out to be also for messaging!
+**** let's see how it works
+*** Spring Cloud Contract *(Expert)*
+**** the producer has to define the contract (YAML or Groovy)
+**** `shouldSendACardRejectedEvent.yml` - let's see what that is
+**** describe the contents - `label`, `input`, `outputMessage`
+**** automatically from the contract test and stub will be generated. Let's see the test
+**** when `sendRejected()` then on channel `channel` the message will have the body and headers specified
+**** let's see the `sendRejected` method. Let's set up the `RabbitMqPublisher` - let's see if we can catch the serialization
+**** the test will fail with missing `timestamp`. The test catches the exception. Let's add the getter and rerun the test
+**** the test passes! We can catch exceptions with serialization! *(Expert)*
+**** we could have checked that with message collector one could say... the problem is that
+in previous version of sc-stream there was no deserialization. Another problem is that you're
+using the same class definition to send and receive the class.
+**** the client can import on the consumer side the stubs of messaging and fail fast
+**** now we can go to production!!!  summary of what we've done so far *(Stanley)*
+** Production *(Expert)*
+*** Senior Enterprise Architect (SEA) - how could have you gone to production?
+*** I have all types of tests, what else should have I done? *(Stanley)*
+*** SEA says "let's look at the `ApplyForCardService`". We store the event in the DB
+and then we send the event to the broker. What if the broker is down?
+*** (S) the transaction is rolled back and nothing happens!
+*** (SEA) what if the db is down and broker works?
+*** (S) oops... other apps process the data but the event wasn't stored!
+*** (S) let me think... I have the solution! I wrote a different impl of Domain Event Publisher
+`FromDBDomainEventPublisher`
+*** (S) first I store the event in the DB (ACID). Then I publish unsent events every 2
+seconds!!! It's transactional! Success!
+*** (SEA) You (@*#&. You have exactly the same problem cause you send a message but since
+the method is transactional you might not store it
+*** (S) I KNEW YOU WOULD SAY THAT !1!!! it's called *at least once delivery*. I've stored the
+entry in the DB eventually once for sure, but I will send at least one message to the broker.
+If the consumer can support that flow then there is no problem!
+*** (S) There was a different option to fire a callback just after successful commit to the database.
+`TransactionSynchronizationManager` allows me to send the message after committing to the db. Then
+I can have *at most once delivery*. That means that if the broker is dead, we will fail to send
+the message. If the broker is ok, then we will send the message once and we're done
+*** Which one is better? Depends on the business. Example, marketing information (at most once),
+card activation (at least once). *(Expert)*
+*** SEA knows that S is right. What can we do? The problem is that we're trying to synchronize
+two states. Broker and DB. How about we get rid of one of them?
+*** I can get the state from the event. How about we store the events and then
+figure out the state from the events?
+** Event sourcing *(Expert)*
+*** What are the pros and cons?
+*** From the events different applications can build different projections
+*** Those perspectives and projections depend on how applications see the business
+*** Very funny joke about a girlfriend and event sourcing and versioning events
+** Questions!
