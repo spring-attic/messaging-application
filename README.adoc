@@ -17,14 +17,13 @@ TODO: add more content
 
 == Before Presentation Script
 
-* BEFORE
-** Clone and checkout start
+* Clone and checkout start
 ```
 $ git clone https://github.com/spring-cloud-samples/messaging-application
 $ cd messaging-application
 $ git checkout start
 ```
-** have rabbitmq running
+* have rabbitmq running
 ```
 $ git clone https://github.com/spring-cloud-samples/messaging-application
 $ cd messaging-application
