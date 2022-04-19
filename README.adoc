@@ -1,3 +1,5 @@
+# messaging-application is no longer actively maintained by VMware, Inc.
+
 image::https://circleci.com/gh/spring-cloud-samples/messaging-application.svg?style=svg["CircleCI", link="https://circleci.com/gh/spring-cloud-samples/messaging-application"]
 image::https://codecov.io/gh/spring-cloud-samples/messaging-application/branch/master/graph/badge.svg["codecov", link="https://codecov.io/gh/spring-cloud-samples/messaging-application"]
 
